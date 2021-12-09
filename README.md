@@ -255,17 +255,13 @@ The reason for not using extreme programming as our methodology is simply becaus
 
 3b) The Comparison 
 
-                                    Spiral                      Waterfall                  Incremental                Extreme Programming 
-
-Duration of project                 Long Project               Short Project               Long Project               Long or Short Project 
-
-Risks                               Low                        High                        Low                        High 
-
-Flexibility                         Medium                     Low                         High                       High 
-
-Difficulties Level                  Medium                     Low                         Low                        High 
- 
-Experience with it                  None                       Medium                      Medium                     None 
+|                   |               |Spiral      |               |Waterfall    |              |Incremental |               |Extreme Programming  | 
+| ---               |               | ---        |               | ---         |              | ---        |               | ---                 |
+|Duration of project|               |Long Project|               |Short Project|              |Long Project|               |Long or Short Project| 
+|Risks              |               |Low         |               |High         |              |Low         |               |High                 |
+|Flexibility        |               |Medium      |               |Low          |              |High        |               |High                 |
+|Difficulties Level |               |Medium      |               |Low          |              |Low         |               |High                 |
+|Experience with it |               |None        |               |Medium       |              |Medium      |               |None                 |
 
  
 
