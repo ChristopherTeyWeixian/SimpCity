@@ -8,7 +8,8 @@ while (True):
     match option:
         case "1":
             board = Board()
-            board.New_Board()
+            if board.New_Board() == False:
+                continue
             while(True):
                 game_opt = game_menu(board)
                 match game_opt:
