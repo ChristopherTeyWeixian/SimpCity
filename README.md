@@ -120,7 +120,7 @@ More documentation with intermediate phases
 
 Risk of not meeting schedule (With never-ending spiral) 
 
- 
+ ---------------------
 
 Waterfall 
 
@@ -149,7 +149,7 @@ No working product/prototype until later part of the life cycle.
 
 It does not allow much room for reflection or revision.   
  
-
+---------------------
 Incremental 
 
 Pros: 
@@ -172,7 +172,7 @@ Needs good planning and design.
 
 Needs a clear and complete definition of the whole system before it can be broken down and built incrementally. 
 
-
+---------------------
 
 Extreme Programming 
 
@@ -208,7 +208,7 @@ Requires version management
 
 Requires self-discipline to practice 
 
- 
+---------------------
 
 Pair Programming 
 
@@ -255,33 +255,53 @@ The reason for not using extreme programming as our methodology is simply becaus
 
 3b) The Comparison 
 
-Spiral  
+**Spiral**
 
-Duration of project Long Project
-Risks               Low
-Flexibility         Medium
-Difficulties Level  Medium
-Experience with it  None
+Duration of project-Long Project
 
-Waterfall
+Risks-Low
 
-Duration of project Short Project
-Risks               High
-Flexibility         Low
-Difficulties Level  Low
-Experience with it  Medium
+Flexibility-Medium
 
-Incremental
+Difficulties Level-Medium
 
-Duration of project Long Project
-Risks               Low
-Flexibility         High
-Difficulties Level  Low
-Experience with it  Medium
+Experience with it-None
 
-Extreme Programming
-Duration of project Long or Short Project
-Risks               High       
-Flexibility         High
-Difficulties Level  High
-Experience with it  None
+---------------------
+**Waterfall**
+
+Duration of project-Short Project
+
+Risks-High
+
+Flexibility-Low
+
+Difficulties Level-Low
+
+Experience with it-Medium
+
+---------------------
+**Incremental**
+
+Duration of project-Long Project
+
+Risks-Low
+
+Flexibility-High
+
+Difficulties Level-Low
+
+Experience with it-Medium
+
+---------------------
+**Extreme Programming**
+
+Duration of project-Long/Short Project
+
+Risks-High
+
+Flexibility-High
+
+Difficulties Level-High
+
+Experience with it-None
