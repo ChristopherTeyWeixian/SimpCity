@@ -46,6 +46,3 @@ def game_menu(currentBoard):
             print(line)
 
     return option
-
-
-    
