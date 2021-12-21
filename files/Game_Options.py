@@ -258,6 +258,7 @@ def check_adjacent(currentBoard, column_coord, row_coord):
         building_choice(currentBoard, column_coord, row_coord)
 
 def prevent_overlap(currentBoard, column_coord, row_coord):
+    #Function to check for overlapping buildings
     if column_coord is not None or row_coord is not None:
         if currentBoard.board[row_coord][column_coord] != " ":
             print("Cannot overlap buildings")
