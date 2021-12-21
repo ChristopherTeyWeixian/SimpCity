@@ -36,25 +36,20 @@ def place_building(currentBoard):
             print("Input a valid row number")
             return False
 
-        check_adjacent(currentBoard, column_coord, row_coord)
+        prevent_overlap(currentBoard, column_coord, row_coord)
 
     else:
             print("Invalid option")
 
-def building_choice(currentBoard, column_coord, row_coord):
+def building_choice(currentBoard, column_coord, row_coord): 
     #Modifying row & column selected
     #Thinking of make a list for all the building types later on
     #Building types: HSE, FAC, SHP, HWY, BCH
-    if column_coord is not None or row_coord is not None:
-        currentBoard.board[row_coord][column_coord-1] = 'H' 
-        currentBoard.board[row_coord][column_coord] = 'S'
-        currentBoard.board[row_coord][column_coord+1] = 'E'
-        currentBoard.Next_Turn()
-        return True
-
-    else:
-        print(" ")
-        return False
+    currentBoard.board[row_coord][column_coord-1] = 'H' 
+    currentBoard.board[row_coord][column_coord] = 'S'
+    currentBoard.board[row_coord][column_coord+1] = 'E'
+    currentBoard.Next_Turn()
+    return True
 
 def check_adjacent(currentBoard, column_coord, row_coord):
     #Defining taken slots
@@ -261,3 +256,15 @@ def check_adjacent(currentBoard, column_coord, row_coord):
     else:
         #Only for turn 1
         building_choice(currentBoard, column_coord, row_coord)
+
+def prevent_overlap(currentBoard, column_coord, row_coord):
+    if column_coord is not None or row_coord is not None:
+        if currentBoard.board[row_coord][column_coord] != " ":
+            print("Cannot overlap buildings")
+            return False
+        else:
+            check_adjacent(currentBoard, column_coord, row_coord)
+
+    else:
+        print(" ")
+        return False
