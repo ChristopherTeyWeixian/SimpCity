@@ -43,27 +43,14 @@ def place_building(currentBoard):
 
 def building_choice(currentBoard, column_coord, row_coord): 
     #Modifying row & column selected
-    #Thinking of make a list for all the building types later on
     #Building types: HSE, FAC, SHP, HWY, BCH
-    currentBoard.board[row_coord][column_coord-1] = 'H' 
-    currentBoard.board[row_coord][column_coord] = 'S'
-    currentBoard.board[row_coord][column_coord+1] = 'E'
+    currentBoard.board[row_coord][column_coord-1] = '' 
+    currentBoard.board[row_coord][column_coord] = 'HSE'
+    currentBoard.board[row_coord][column_coord+1] = ''
     currentBoard.Next_Turn()
     return True
 
 def check_adjacent(currentBoard, column_coord, row_coord):
-    #Defining taken slots
-    #above_taken = (currentBoard.board[row_coord - 2][column_coord] != " ")
-    #below_taken = (currentBoard.board[row_coord + 2][column_coord] != " ")
-    #right_taken = (currentBoard.board[row_coord][column_coord + 6] != " ")
-    #left_taken = (currentBoard.board[row_coord][column_coord - 6] != " ")
-
-    #Defining empty slots
-    #above_empty = (currentBoard.board[row_coord - 2][column_coord] == " ")
-    #below_empty = (currentBoard.board[row_coord + 2][column_coord] == " ")
-    #right_empty = (currentBoard.board[row_coord][column_coord + 6] == " ")
-    #left_empty = (currentBoard.board[row_coord][column_coord - 6] == " ")
-    
     #Validation after turn 1
     if currentBoard.turn > 1:
         #Check column 1
