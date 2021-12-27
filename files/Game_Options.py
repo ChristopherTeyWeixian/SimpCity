@@ -1,7 +1,7 @@
 from files.Board import *
 
 #Game Options 1 & 2, Build a building
-def place_building(currentBoard):
+def place_building(currentBoard,building):
     option = str(input("Build where? "))
     #Translate user input to actual position on table
     column_table = ['a', 'b', 'c', 'd']
@@ -36,21 +36,21 @@ def place_building(currentBoard):
             print("Input a valid row number")
             return False
 
-        prevent_overlap(currentBoard, column_coord, row_coord)
+        prevent_overlap(currentBoard, column_coord, row_coord,building)
 
     else:
             print("Invalid option")
 
-def building_choice(currentBoard, column_coord, row_coord): 
+def building_choice(currentBoard, column_coord, row_coord,building): 
     #Modifying row & column selected
     #Building types: HSE, FAC, SHP, HWY, BCH
     currentBoard.board[row_coord][column_coord-1] = '' 
-    currentBoard.board[row_coord][column_coord] = 'HSE'
+    currentBoard.board[row_coord][column_coord] = building
     currentBoard.board[row_coord][column_coord+1] = ''
     currentBoard.Next_Turn()
     return True
 
-def check_adjacent(currentBoard, column_coord, row_coord):
+def check_adjacent(currentBoard, column_coord, row_coord,building):
     #Validation after turn 1
     if currentBoard.turn > 1:
         #Check column 1
@@ -64,7 +64,7 @@ def check_adjacent(currentBoard, column_coord, row_coord):
                 
                 #If slot to the right/below is taken
                 elif (currentBoard.board[row_coord][column_coord + 6] != " ") or (currentBoard.board[row_coord + 2][column_coord] != " "):
-                    building_choice(currentBoard, column_coord, row_coord)
+                    building_choice(currentBoard, column_coord, row_coord,building)
 
             #Second row
             elif row_coord == 4:
@@ -75,7 +75,7 @@ def check_adjacent(currentBoard, column_coord, row_coord):
 
                 #If slot above/right/below is taken
                 elif (currentBoard.board[row_coord - 2][column_coord] != " ") or (currentBoard.board[row_coord][column_coord + 6] != " ") or (currentBoard.board[row_coord + 2][column_coord] != " "):
-                    building_choice(currentBoard, column_coord, row_coord)
+                    building_choice(currentBoard, column_coord, row_coord,building)
 
             #Third row
             elif row_coord == 6:
@@ -86,7 +86,7 @@ def check_adjacent(currentBoard, column_coord, row_coord):
 
                 #If slot above/right/below is taken
                 elif (currentBoard.board[row_coord - 2][column_coord] != " ") or (currentBoard.board[row_coord][column_coord + 6] != " ") or (currentBoard.board[row_coord + 2][column_coord] != " "):
-                    building_choice(currentBoard, column_coord, row_coord)
+                    building_choice(currentBoard, column_coord, row_coord,building)
 
             #Fourth row
             elif row_coord == 8:
@@ -97,7 +97,7 @@ def check_adjacent(currentBoard, column_coord, row_coord):
                 
                 #If slot to the right/up is taken
                 elif (currentBoard.board[row_coord][column_coord + 6] != " ") or (currentBoard.board[row_coord - 2][column_coord] != " "):
-                    building_choice(currentBoard, column_coord, row_coord)
+                    building_choice(currentBoard, column_coord, row_coord,building)
 
         #-------------------------------------------------------------------
         #Check column 2
@@ -111,7 +111,7 @@ def check_adjacent(currentBoard, column_coord, row_coord):
 
                 #If slot left/right/below is taken
                 elif (currentBoard.board[row_coord][column_coord - 6] != " ") or (currentBoard.board[row_coord][column_coord + 6] != " ") or (currentBoard.board[row_coord + 2][column_coord] != " "):
-                    building_choice(currentBoard, column_coord, row_coord)
+                    building_choice(currentBoard, column_coord, row_coord,building)
 
             #Second row
             elif row_coord == 4:
@@ -122,7 +122,7 @@ def check_adjacent(currentBoard, column_coord, row_coord):
 
                 #If slot above/left/right/below is taken
                 elif (currentBoard.board[row_coord - 2][column_coord] != " ") or (currentBoard.board[row_coord][column_coord - 6] != " ") or (currentBoard.board[row_coord][column_coord + 6] != " ") or (currentBoard.board[row_coord + 2][column_coord] != " "):
-                    building_choice(currentBoard, column_coord, row_coord)
+                    building_choice(currentBoard, column_coord, row_coord,building)
 
             #Third row
             elif row_coord == 6:
@@ -133,7 +133,7 @@ def check_adjacent(currentBoard, column_coord, row_coord):
 
                 #If slot above/left/right/below is taken
                 elif (currentBoard.board[row_coord - 2][column_coord] != " ") or (currentBoard.board[row_coord][column_coord - 6] != " ") or (currentBoard.board[row_coord][column_coord + 6] != " ") or (currentBoard.board[row_coord + 2][column_coord] != " "):
-                    building_choice(currentBoard, column_coord, row_coord)
+                    building_choice(currentBoard, column_coord, row_coord,building)
 
             #Fourth row
             elif row_coord == 8:
@@ -144,7 +144,7 @@ def check_adjacent(currentBoard, column_coord, row_coord):
 
                 #If slot above/left/right is taken
                 elif (currentBoard.board[row_coord - 2][column_coord] != " ") or (currentBoard.board[row_coord][column_coord - 6] != " ") or (currentBoard.board[row_coord][column_coord + 6] != " "):
-                    building_choice(currentBoard, column_coord, row_coord)
+                    building_choice(currentBoard, column_coord, row_coord,building)
 
         #-------------------------------------------------------------------
         #Check column 3
@@ -158,7 +158,7 @@ def check_adjacent(currentBoard, column_coord, row_coord):
 
                 #If slot left/right/below is taken
                 elif (currentBoard.board[row_coord][column_coord - 6] != " ") or (currentBoard.board[row_coord][column_coord + 6] != " ") or (currentBoard.board[row_coord + 2][column_coord] != " "):
-                    building_choice(currentBoard, column_coord, row_coord)
+                    building_choice(currentBoard, column_coord, row_coord,building)
 
             #Second row
             elif row_coord == 4:
@@ -169,7 +169,7 @@ def check_adjacent(currentBoard, column_coord, row_coord):
 
                 #If slot above/left/right/below is taken
                 elif (currentBoard.board[row_coord - 2][column_coord] != " ") or (currentBoard.board[row_coord][column_coord - 6] != " ") or (currentBoard.board[row_coord][column_coord + 6] != " ") or (currentBoard.board[row_coord + 2][column_coord] != " "):
-                    building_choice(currentBoard, column_coord, row_coord)
+                    building_choice(currentBoard, column_coord, row_coord,building)
 
             #Third row
             elif row_coord == 6:
@@ -180,7 +180,7 @@ def check_adjacent(currentBoard, column_coord, row_coord):
 
                 #If slot above/left/right/below is taken
                 elif (currentBoard.board[row_coord - 2][column_coord] != " ") or (currentBoard.board[row_coord][column_coord - 6] != " ") or (currentBoard.board[row_coord][column_coord + 6] != " ") or (currentBoard.board[row_coord + 2][column_coord] != " "):
-                    building_choice(currentBoard, column_coord, row_coord)
+                    building_choice(currentBoard, column_coord, row_coord,building)
 
             #Fourth row
             elif row_coord == 8:
@@ -191,7 +191,7 @@ def check_adjacent(currentBoard, column_coord, row_coord):
 
                 #If slot above/left/right is taken
                 elif (currentBoard.board[row_coord - 2][column_coord] != " ") or (currentBoard.board[row_coord][column_coord - 6] != " ") or (currentBoard.board[row_coord][column_coord + 6] != " "):
-                    building_choice(currentBoard, column_coord, row_coord)
+                    building_choice(currentBoard, column_coord, row_coord,building)
 
         #-------------------------------------------------------------------
         #Check column 4
@@ -205,7 +205,7 @@ def check_adjacent(currentBoard, column_coord, row_coord):
                 
                 #If slot to the left/below is taken
                 elif (currentBoard.board[row_coord][column_coord - 6] != " ") or (currentBoard.board[row_coord + 2][column_coord] != " "):
-                    building_choice(currentBoard, column_coord, row_coord)
+                    building_choice(currentBoard, column_coord, row_coord,building)
 
             #Second row
             elif row_coord == 4:
@@ -216,7 +216,7 @@ def check_adjacent(currentBoard, column_coord, row_coord):
 
                 #If slot above/left/below is taken
                 elif (currentBoard.board[row_coord - 2][column_coord] != " ") or (currentBoard.board[row_coord][column_coord - 6] != " ") or (currentBoard.board[row_coord + 2][column_coord] != " "):
-                    building_choice(currentBoard, column_coord, row_coord)
+                    building_choice(currentBoard, column_coord, row_coord,building)
 
             #Third row
             elif row_coord == 6:
@@ -227,7 +227,7 @@ def check_adjacent(currentBoard, column_coord, row_coord):
 
                 #If slot above/left/below is taken
                 elif (currentBoard.board[row_coord - 2][column_coord] != " ") or (currentBoard.board[row_coord][column_coord - 6] != " ") or (currentBoard.board[row_coord + 2][column_coord] != " "):
-                    building_choice(currentBoard, column_coord, row_coord)
+                    building_choice(currentBoard, column_coord, row_coord,building)
 
             #Fourth row
             elif row_coord == 8:
@@ -238,20 +238,20 @@ def check_adjacent(currentBoard, column_coord, row_coord):
                 
                 #If slot to the above/left is taken
                 elif (currentBoard.board[row_coord - 2][column_coord] != " ") or (currentBoard.board[row_coord][column_coord - 6] != " "):
-                    building_choice(currentBoard, column_coord, row_coord)
+                    building_choice(currentBoard, column_coord, row_coord,building)
 
     else:
         #Only for turn 1
-        building_choice(currentBoard, column_coord, row_coord)
+        building_choice(currentBoard, column_coord, row_coord,building)
 
-def prevent_overlap(currentBoard, column_coord, row_coord):
+def prevent_overlap(currentBoard, column_coord, row_coord,building):
     #Function to check for overlapping buildings
     if column_coord is not None or row_coord is not None:
         if currentBoard.board[row_coord][column_coord] != " ":
             print("Cannot overlap buildings")
             return False
         else:
-            check_adjacent(currentBoard, column_coord, row_coord)
+            check_adjacent(currentBoard, column_coord, row_coord,building)
 
     else:
         print(" ")

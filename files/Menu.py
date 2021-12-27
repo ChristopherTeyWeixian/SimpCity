@@ -50,4 +50,4 @@ def game_menu(currentBoard):
         else:
             print(line)
 
-    return option
+    return option,OptionBuildingList[int(option)-1]

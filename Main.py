@@ -12,12 +12,12 @@ while (True):
             if board.New_Board() == False:
                 continue
             while(True):
-                game_opt = game_menu(board)
+                game_opt,building_to_build = game_menu(board)
                 match game_opt:
                     case "1":
-                        place_building(board)
+                        place_building(board,building_to_build)
                     case "2":
-                        place_building(board)
+                        place_building(board,building_to_build)
                     case "3":
                         print("see remaining building ehhhh")
                     case "4":
