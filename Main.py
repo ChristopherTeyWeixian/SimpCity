@@ -19,7 +19,7 @@ while (True):
                     case "2":
                         place_building(board,building_to_build)
                     case "3":
-                        print("see remaining building ehhhh")
+                        display_remaining_building(board)
                     case "4":
                         print("see current score, not yet implement")
                     case "5":

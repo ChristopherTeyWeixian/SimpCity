@@ -6,6 +6,12 @@ class Board(object):
     def __init__(self):
         self.board = []
         self.turn = 1
+        
+        self.Beach= 8
+        self.Factory= 8
+        self.House= 8
+        self.Shop= 8
+        self.Highway= 8
 
     def New_Board(self):
         try:
@@ -47,3 +53,24 @@ class Board(object):
     def Next_Turn(self):
         self.turn += 1
         return self.turn
+
+    def update_board_building(self,Building_Placed):
+        if Building_Placed=="BCH":
+            self.Beach-=1
+            return self.Beach
+            
+        elif Building_Placed=="FAC":
+            self.Factory-=1
+            return self.Factory
+
+        elif Building_Placed=="HSE":
+            self.House-=1
+            return self.House
+
+        elif Building_Placed=="SHP":
+            self.Shop-=1
+            return self.Shop
+
+        elif Building_Placed=="HWY":
+            self.Highway-=1
+            return self.Highway

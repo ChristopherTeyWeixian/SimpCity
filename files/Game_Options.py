@@ -47,6 +47,7 @@ def building_choice(currentBoard, column_coord, row_coord,building):
     currentBoard.board[row_coord][column_coord-1] = '' 
     currentBoard.board[row_coord][column_coord] = building
     currentBoard.board[row_coord][column_coord+1] = ''
+    currentBoard.update_board_building(building)
     currentBoard.Next_Turn()
     return True
 
@@ -256,3 +257,13 @@ def prevent_overlap(currentBoard, column_coord, row_coord,building):
     else:
         print(" ")
         return False
+
+def display_remaining_building(currentBoard): #Game option 3
+    print("Building          Remaining")
+    print("--------          ---------")
+    print("BCH              ",currentBoard.Beach)
+    print("FAC              ",currentBoard.Factory)
+    print("HSE              ",currentBoard.House)
+    print("SHP              ",currentBoard.Shop)
+    print("HWY              ",currentBoard.Highway)
+    print("")

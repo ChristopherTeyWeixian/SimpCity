@@ -37,9 +37,11 @@ def game_menu(currentBoard):
 
     # TODO creates build option
     for line in menu1:
+        #If building type have more than 1 building left to place
         RandBuilding=random.randint(0,len(BuildingListShortForm)-1)
         OptionBuildingList.append(BuildingListShortForm[RandBuilding])
         print(line+BuildingListShortForm[RandBuilding])
+        #Else do not append building with 0 build amt
 
     # create the other option from 3 to 5 and 0
     for line in menu2:
@@ -50,4 +52,7 @@ def game_menu(currentBoard):
         else:
             print(line)
 
-    return option,OptionBuildingList[int(option)-1]
+    if option == "1" or option == "2":
+        return option,OptionBuildingList[int(option)-1]
+    else:
+        return option, None
