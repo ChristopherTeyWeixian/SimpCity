@@ -23,7 +23,7 @@ while (True):
                     case "4":
                         print("see current score, not yet implement")
                     case "5":
-                        print("save game.... hmmm")
+                        board.Save_Board()
                     case "0":
                         break
 

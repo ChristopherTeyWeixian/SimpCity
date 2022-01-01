@@ -48,7 +48,29 @@ class Board(object):
         return
 
     def Save_Board(self):
-        return
+        try:
+            adds_line = "\q"
+            adds_line = adds_line.replace("q", "")
+            path = str(pathlib.Path(__file__).parent.resolve()) + "\.." + adds_line + "data\save_board.xlsx"
+
+            wb_obj = openpyxl.load_workbook(path)
+            sheet_obj = wb_obj.active
+
+            for x in range(0, len(self.board[0])):
+                for y in range(0, len(self.board)):
+                    if self.board[y][x] == " ":
+                        sheet_obj.cell(row = y + 1, column= x + 1).value = "e"
+                    elif self.board[y][x] == "":
+                        sheet_obj.cell(row = y + 1, column= x + 1).value = "n"
+                    else:
+                        sheet_obj.cell(row = y + 1, column= x + 1).value = self.board[y][x]
+
+            wb_obj.save(path)
+
+            return True
+        except:
+            print("Unable to connect to save file")
+            return False
 
     def Next_Turn(self):
         self.turn += 1
