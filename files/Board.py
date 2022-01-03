@@ -1,3 +1,4 @@
+#from functools import _SingleDispatchCallable
 import pathlib
 import openpyxl
 from openpyxl.cell import cell
@@ -96,6 +97,22 @@ class Board(object):
                         sheet_obj.cell(row = y + 1, column= x + 1).value = self.board[y][x]
 
             wb_obj.save(path)
+            
+            dataList = [self.turn, self.Beach, self.Factory, self.House, self.Shop, self.Highway]
+
+            path = str(pathlib.Path(__file__).parent.resolve()) + "\.." + adds_line + "data\save_data.txt"
+
+            txt_data = open(path,"w")
+            sv_data = ""
+            for i in range(0, len(dataList)):
+                if i != 0:
+                    sv_data = sv_data + ";" + str(dataList[i])
+                else:
+                    sv_data = sv_data + str(dataList[i])
+
+            txt_data.write(sv_data)
+            txt_data.close()
+            print(sv_data)
 
             return True
         except:
