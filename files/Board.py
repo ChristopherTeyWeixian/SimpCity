@@ -73,6 +73,21 @@ class Board(object):
                     temp_list.append(cell_obj)
                 self.board.append(temp_list)
 
+            path = str(pathlib.Path(__file__).parent.resolve()) + "\.." + adds_line + "data\save_data.txt"
+
+            txt_data = open(path,"r")
+            sv_data = txt_data.readline()
+            sv_data = sv_data.split(";")
+
+            self.turn = sv_data[0]
+            self.Beach = sv_data[1]
+            self.Factory = sv_data[2]
+            self.House = sv_data[3]
+            self.Shop = sv_data[4]
+            self.Highway = sv_data[5]
+
+            txt_data.close()
+
             return True
         except:
             print("[!] Could not connect to Excel Database, Please Try Again.\n")
