@@ -1,4 +1,3 @@
-#from functools import _SingleDispatchCallable
 import pathlib
 import openpyxl
 from openpyxl.cell import cell
@@ -127,7 +126,7 @@ class Board(object):
 
             txt_data.write(sv_data)
             txt_data.close()
-            print(sv_data)
+            #print(sv_data)
 
             return True
         except:
