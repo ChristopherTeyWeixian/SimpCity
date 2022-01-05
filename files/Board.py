@@ -78,12 +78,12 @@ class Board(object):
             sv_data = txt_data.readline()
             sv_data = sv_data.split(";")
 
-            self.turn = sv_data[0]
-            self.Beach = sv_data[1]
-            self.Factory = sv_data[2]
-            self.House = sv_data[3]
-            self.Shop = sv_data[4]
-            self.Highway = sv_data[5]
+            self.turn = int(sv_data[0])
+            self.Beach = int(sv_data[1])
+            self.Factory = int(sv_data[2])
+            self.House = int(sv_data[3])
+            self.Shop = int(sv_data[4])
+            self.Highway = int(sv_data[5])
 
             txt_data.close()
 
@@ -126,7 +126,7 @@ class Board(object):
 
             txt_data.write(sv_data)
             txt_data.close()
-            #print(sv_data)
+            print("Game saved!")
 
             return True
         except:

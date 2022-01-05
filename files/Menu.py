@@ -1,6 +1,8 @@
 from files.Board import *
 import random
 
+from files.Game_Options import check_building_left
+
 # prints the main menu
 def main_menu():
 
@@ -19,8 +21,9 @@ def main_menu():
 
 # prints the game menu
 def game_menu(currentBoard):
-    BuildingListShortForm=["BCH","FAC","HSE","SHP","HWY"]
-    OptionBuildingList=[]
+    OptionBuildingList= []
+    UpdatedBuildingList = []
+    UpdatedBuildingList = check_building_left(currentBoard)
 
     menu1 = ["1. Build a ", "2. Build a "]
 
@@ -38,9 +41,10 @@ def game_menu(currentBoard):
     # TODO creates build option
     for line in menu1:
         #If building type have more than 1 building left to place
-        RandBuilding=random.randint(0,len(BuildingListShortForm)-1)
-        OptionBuildingList.append(BuildingListShortForm[RandBuilding])
-        print(line+BuildingListShortForm[RandBuilding])
+        #if check_building_left return true
+        RandBuilding=random.randint(0,len(UpdatedBuildingList)-1)
+        OptionBuildingList.append(UpdatedBuildingList[RandBuilding])
+        print(line+UpdatedBuildingList[RandBuilding])
         #Else do not append building with 0 build amt
 
     # create the other option from 3 to 5 and 0
