@@ -1,4 +1,7 @@
 from files.Board import *
+import random
+
+from files.Game_Options import check_building_left
 
 # prints the main menu
 def main_menu():
@@ -18,11 +21,14 @@ def main_menu():
 
 # prints the game menu
 def game_menu(currentBoard):
+    OptionBuildingList= []
+    UpdatedBuildingList = []
+    UpdatedBuildingList = check_building_left(currentBoard)
 
     menu1 = ["1. Build a ", "2. Build a "]
 
     menu2 = ["3. See remaining buildings", "4. See current score", "", 
-            "5. Save game", "0. Exit to main menu", "Your choice? "]
+                "5. Save game", "0. Exit to main menu", "Your choice? "]
 
     print("Turn ", currentBoard.turn)
 
@@ -34,7 +40,12 @@ def game_menu(currentBoard):
 
     # TODO creates build option
     for line in menu1:
-        print(line)
+        #If building type have more than 1 building left to place
+        #if check_building_left return true
+        RandBuilding=random.randint(0,len(UpdatedBuildingList)-1)
+        OptionBuildingList.append(UpdatedBuildingList[RandBuilding])
+        print(line+UpdatedBuildingList[RandBuilding])
+        #Else do not append building with 0 build amt
 
     # create the other option from 3 to 5 and 0
     for line in menu2:
@@ -45,7 +56,7 @@ def game_menu(currentBoard):
         else:
             print(line)
 
-    return option
-
-
-    
+    if option == "1" or option == "2":
+        return option,OptionBuildingList[int(option)-1]
+    else:
+        return option, None
