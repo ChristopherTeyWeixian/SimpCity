@@ -17,12 +17,12 @@ class Board(object):
         try:
             # adds_line is needed as "\b" is counted as a functionality in python
             # thus a roundabout way was used instead of just changing the file name
-            adds_line = "\q"
+            adds_line = "/q"
             adds_line = adds_line.replace("q", "")
 
             # current file path not+ \..\data\baseboard.xlxs
             # python files is different location as data files
-            path = str(pathlib.Path(__file__).parent.resolve()) + "\.." + adds_line + "data" + adds_line + "base_board.xlsx"
+            path = str(pathlib.Path(__file__).parent.resolve()) + "/.." + adds_line + "data" + adds_line + "base_board.xlsx"
     #        print(path)
 
             # loads the excel file of path
@@ -48,12 +48,12 @@ class Board(object):
         try:
             # adds_line is needed as "\b" is counted as a functionality in python
             # thus a roundabout way was used instead of just changing the file name
-            adds_line = "\q"
+            adds_line = "/q"
             adds_line = adds_line.replace("q", "")
 
             # current file path not+ \..\data\baseboard.xlxs
             # python files is different location as data files
-            path = str(pathlib.Path(__file__).parent.resolve()) + "\.." + adds_line + "data\save_board.xlsx"
+            path = str(pathlib.Path(__file__).parent.resolve()) + "/.." + adds_line + "data/save_board.xlsx"
             #print(path)
 
             # loads the excel file of path
@@ -72,7 +72,7 @@ class Board(object):
                     temp_list.append(cell_obj)
                 self.board.append(temp_list)
 
-            path = str(pathlib.Path(__file__).parent.resolve()) + "\.." + adds_line + "data\save_data.txt"
+            path = str(pathlib.Path(__file__).parent.resolve()) + "/.." + adds_line + "data/save_data.txt"
 
             txt_data = open(path,"r")
             sv_data = txt_data.readline()
@@ -94,9 +94,9 @@ class Board(object):
 
     def Save_Board(self):
         try:
-            adds_line = "\q"
+            adds_line = "/q"
             adds_line = adds_line.replace("q", "")
-            path = str(pathlib.Path(__file__).parent.resolve()) + "\.." + adds_line + "data\save_board.xlsx"
+            path = str(pathlib.Path(__file__).parent.resolve()) + "/.." + adds_line + "data/save_board.xlsx"
 
             wb_obj = openpyxl.load_workbook(path)
             sheet_obj = wb_obj.active
@@ -114,7 +114,7 @@ class Board(object):
             
             dataList = [self.turn, self.Beach, self.Factory, self.House, self.Shop, self.Highway]
 
-            path = str(pathlib.Path(__file__).parent.resolve()) + "\.." + adds_line + "data\save_data.txt"
+            path = str(pathlib.Path(__file__).parent.resolve()) + "/.." + adds_line + "data/save_data.txt"
 
             txt_data = open(path,"w")
             sv_data = ""
