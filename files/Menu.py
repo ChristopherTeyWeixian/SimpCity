@@ -60,3 +60,18 @@ def game_menu(currentBoard):
         return option,OptionBuildingList[int(option)-1]
     else:
         return option, None
+
+def EndGame(currentBoard):
+
+    print("\nFinal layout of Simp City:")
+
+    # build the board
+    for items in currentBoard.board:
+        for item in items:
+            print(item, end =" ")
+        print("")
+
+    # puts a spacing away from the main menu that would appear after the game.
+    print("")
+
+    #TODO: show total scores
