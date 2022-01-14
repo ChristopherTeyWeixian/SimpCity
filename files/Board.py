@@ -12,6 +12,8 @@ class Board(object):
         self.House= 8
         self.Shop= 8
         self.Highway= 8
+        self.Park = 8
+        self.Monument = 8
 
     def New_Board(self):
         try:
@@ -84,6 +86,8 @@ class Board(object):
             self.House = int(sv_data[3])
             self.Shop = int(sv_data[4])
             self.Highway = int(sv_data[5])
+            self.Park = int(sv_data[6])
+            self.Monument = int(sv_data[7])
 
             txt_data.close()
 
@@ -112,7 +116,7 @@ class Board(object):
 
             wb_obj.save(path)
             
-            dataList = [self.turn, self.Beach, self.Factory, self.House, self.Shop, self.Highway]
+            dataList = [self.turn, self.Beach, self.Factory, self.House, self.Shop, self.Highway, self.Park, self.Monument]
 
             path = str(pathlib.Path(__file__).parent.resolve()) + "/.." + adds_line + "data/save_data.txt"
 
@@ -157,3 +161,12 @@ class Board(object):
         elif Building_Placed=="HWY":
             self.Highway-=1
             return self.Highway
+
+        # 2 new buildings
+        elif Building_Placed == "PRK":
+            self.Park -= 1
+            return self.Park
+
+        elif Building_Placed == "MON":
+            self.Monument -= 1
+            return self.Monument

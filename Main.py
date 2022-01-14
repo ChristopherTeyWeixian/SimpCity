@@ -25,10 +25,8 @@ while (True):
                             choose = str(input("Build where? "))
                             place_building(board,building_to_build,choose)
                         case "3":
-                            display_remaining_building(board)
-                        case "4":
                             print("see current score, not yet implement")
-                        case "5":
+                        case "4":
                             board.Save_Board()
                         case "0":
                             break

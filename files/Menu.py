@@ -27,8 +27,8 @@ def game_menu(currentBoard):
 
     menu1 = ["1. Build a ", "2. Build a "]
 
-    menu2 = ["3. See remaining buildings", "4. See current score", "", 
-                "5. Save game", "0. Exit to main menu", "Your choice? "]
+    menu2 = ["3. See current score", "", "4. Save game", 
+                "0. Exit to main menu", "Your choice? "]
 
     print("Turn ", currentBoard.turn)
 
@@ -99,3 +99,7 @@ def display_remaining_building(currentBoard, i): #Game option 3
             print("\t\tSHP              ",currentBoard.Shop, end =" ")
         case 6:
             print("\t\tHWY              ",currentBoard.Highway, end =" ")
+        case 7:
+            print("\t\tPRK              ",currentBoard.Park, end =" ")
+        case 8:
+            print("\t\tMON              ",currentBoard.Monument, end =" ")

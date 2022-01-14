@@ -251,7 +251,7 @@ def prevent_overlap(currentBoard, option, building):
         return False
 
 def check_building_left(currentBoard):
-    BuildingListShortForm=["BCH","FAC","HSE","SHP","HWY"]
+    BuildingListShortForm=["BCH","FAC","HSE","SHP","HWY", "PRK", "MON"]
     CheckedBuildingList = []    
 
     #Check amount of building
@@ -270,6 +270,12 @@ def check_building_left(currentBoard):
             CheckedBuildingList.append(BuildingListShortForm[BuildingListShortForm.index(line)])
 
         if line == "HWY" and currentBoard.Highway >=1:
+            CheckedBuildingList.append(BuildingListShortForm[BuildingListShortForm.index(line)])
+        
+        if line == "PRK" and currentBoard.Park >= 1:
+            CheckedBuildingList.append(BuildingListShortForm[BuildingListShortForm.index(line)])
+
+        if line == "MON" and currentBoard.Monument >= 1:
             CheckedBuildingList.append(BuildingListShortForm[BuildingListShortForm.index(line)])
 
     return CheckedBuildingList
