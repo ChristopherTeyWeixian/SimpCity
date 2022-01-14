@@ -257,25 +257,25 @@ def check_building_left(currentBoard):
     #Check amount of building
     #If no building, then wont display it
     for line in BuildingListShortForm:
-        if line == "BCH" and currentBoard.Beach >=1:
+        if line == "BCH" and currentBoard.Beach >=1 and currentBoard.BuildingState[0] == "True":
             CheckedBuildingList.append(BuildingListShortForm[BuildingListShortForm.index(line)])
 
-        if line == "FAC" and currentBoard.Factory>=1:
+        if line == "FAC" and currentBoard.Factory>=1 and currentBoard.BuildingState[1] == "True":
             CheckedBuildingList.append(BuildingListShortForm[BuildingListShortForm.index(line)])
 
-        if line == "HSE" and currentBoard.House >=1:
+        if line == "HSE" and currentBoard.House >=1 and currentBoard.BuildingState[2] == "True":
             CheckedBuildingList.append(BuildingListShortForm[BuildingListShortForm.index(line)])
 
-        if line == "SHP" and currentBoard.Shop>=1:
+        if line == "SHP" and currentBoard.Shop>=1 and currentBoard.BuildingState[3] == "True":
             CheckedBuildingList.append(BuildingListShortForm[BuildingListShortForm.index(line)])
 
-        if line == "HWY" and currentBoard.Highway >=1:
+        if line == "HWY" and currentBoard.Highway >=1 and currentBoard.BuildingState[4] == "True":
             CheckedBuildingList.append(BuildingListShortForm[BuildingListShortForm.index(line)])
         
-        if line == "PRK" and currentBoard.Park >= 1:
+        if line == "PRK" and currentBoard.Park >= 1 and currentBoard.BuildingState[5] == "True":
             CheckedBuildingList.append(BuildingListShortForm[BuildingListShortForm.index(line)])
 
-        if line == "MON" and currentBoard.Monument >= 1:
+        if line == "MON" and currentBoard.Monument >= 1 and currentBoard.BuildingState[6] == "True":
             CheckedBuildingList.append(BuildingListShortForm[BuildingListShortForm.index(line)])
 
     return CheckedBuildingList

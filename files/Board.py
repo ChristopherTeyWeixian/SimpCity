@@ -15,8 +15,19 @@ class Board(object):
         self.Park = 8
         self.Monument = 8
 
+        self.BeachOpt = "True"
+        self.FactoryOpt = "True"
+        self.HouseOpt = "True"
+        self.ShopOpt = "True"
+        self.HighwayOpt = "True"
+        self.ParkOpt = "False"
+        self.MonumentOpt = "False"
+
+        self.BuildingState = [self.BeachOpt, self.FactoryOpt, self.HouseOpt, self.ShopOpt, self.HighwayOpt, self.ParkOpt, self.MonumentOpt]
+
     def New_Board(self):
         try:
+            self.Get_BuildingState()
             # adds_line is needed as "\b" is counted as a functionality in python
             # thus a roundabout way was used instead of just changing the file name
             adds_line = "/q"
@@ -48,6 +59,7 @@ class Board(object):
 
     def Load_Board(self):
         try:
+            self.Get_BuildingState()
             # adds_line is needed as "\b" is counted as a functionality in python
             # thus a roundabout way was used instead of just changing the file name
             adds_line = "/q"
@@ -170,3 +182,58 @@ class Board(object):
         elif Building_Placed == "MON":
             self.Monument -= 1
             return self.Monument
+
+    def Change_BuildingState(self, i):
+        j = int(i) - 1
+        amount_Active = 0
+        amount_Inactive = 0
+
+        for state in self.BuildingState:
+            if state == "True":
+                amount_Active += 1
+            else:
+                amount_Inactive += 1
+
+        if amount_Active == 5 and self.BuildingState[j] == "False":
+            print("\n[!] You have already selected 5 buildings !! Please deselect other buildings first\n")
+        else:
+            if self.BuildingState[j] == "True":
+                self.BuildingState[j] = "False"
+            else:
+                self.BuildingState[j] = "True"
+
+    def Get_BuildingState(self):
+        adds_line = "/q"
+        adds_line = adds_line.replace("q", "")
+
+        path = str(pathlib.Path(__file__).parent.resolve()) + "/.." + adds_line + "data/state_data.txt"
+
+        txt_data = open(path,"r")
+        sv_data = txt_data.readline()
+        sv_data = sv_data.split(";")
+
+        for i in range(0, len(sv_data)):
+            self.BuildingState[i] = sv_data[i]
+
+        txt_data.close()
+        
+        return None
+
+    def Set_BuildingState(self):
+        adds_line = "/q"
+        adds_line = adds_line.replace("q", "")
+
+        path = str(pathlib.Path(__file__).parent.resolve()) + "/.." + adds_line + "data/state_data.txt"
+
+        txt_data = open(path,"w")
+        sv_data = ""
+        for i in range(0, len(self.BuildingState)):
+            if i != 0:
+                sv_data = sv_data + ";" + self.BuildingState[i]
+            else:
+                sv_data = self.BuildingState[i]
+
+        txt_data.write(sv_data)
+        txt_data.close()
+
+        return None

@@ -52,6 +52,16 @@ while (True):
                         board.Save_Board()
                     case "0":
                         break
+        case "3":
+            board = Board()
+            board.Get_BuildingState()
+            while True:
+                value = Option_Building(board)
+                if value == "0":
+                    board.Set_BuildingState()
+                    break
+                else:
+                    board.Change_BuildingState(value)           
 
         case "0":#Exit
             quit()
