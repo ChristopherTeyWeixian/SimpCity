@@ -274,16 +274,6 @@ def check_building_left(currentBoard):
 
     return CheckedBuildingList
 
-def display_remaining_building(currentBoard): #Game option 3
-    print("Building          Remaining")
-    print("--------          ---------")
-    print("BCH              ",currentBoard.Beach)
-    print("FAC              ",currentBoard.Factory)
-    print("HSE              ",currentBoard.House)
-    print("SHP              ",currentBoard.Shop)
-    print("HWY              ",currentBoard.Highway)
-    print("")
-
 def convert_option(Option):
     #Tables for input conversion
     column_table = ['a', 'b', 'c', 'd']

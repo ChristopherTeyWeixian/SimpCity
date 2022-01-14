@@ -32,10 +32,13 @@ def game_menu(currentBoard):
 
     print("Turn ", currentBoard.turn)
 
+    i = 0
     # build the board
     for items in currentBoard.board:
         for item in items:
             print(item, end =" ")
+        display_remaining_building(currentBoard, i)
+        i += 1
         print("")
 
     # TODO creates build option
@@ -66,12 +69,33 @@ def EndGame(currentBoard):
     print("\nFinal layout of Simp City:")
 
     # build the board
+    i = 0
+    # build the board
     for items in currentBoard.board:
         for item in items:
             print(item, end =" ")
+        display_remaining_building(currentBoard, i)
+        i += 1
         print("")
 
     # puts a spacing away from the main menu that would appear after the game.
     print("")
 
     #TODO: show total scores
+
+def display_remaining_building(currentBoard, i): #Game option 3
+    match i:
+        case 0:
+            print("\t\tBuilding          Remaining", end =" ")
+        case 1:
+            print("\t\t--------          ---------", end =" ")
+        case 2:
+            print("\t\tBCH              ",currentBoard.Beach, end =" ")
+        case 3:
+            print("\t\tFAC              ",currentBoard.Factory, end =" ")
+        case 4:
+            print("\t\tHSE              ",currentBoard.House, end =" ")
+        case 5:
+            print("\t\tSHP              ",currentBoard.Shop, end =" ")
+        case 6:
+            print("\t\tHWY              ",currentBoard.Highway, end =" ")
