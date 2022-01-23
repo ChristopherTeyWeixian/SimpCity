@@ -1,3 +1,5 @@
+from re import I
+import xdrlib
 from files.Board import *
 
 #Game Options 1 & 2, Build a building
@@ -299,3 +301,40 @@ def convert_option(Option):
             row = actual_rows[row_table.index(chosen_row)]
 
     return column,row
+
+def CalculateScore(currentBoard):
+    score=0
+    actual_columns = [4, 10, 16, 22]
+    actual_rows = [2, 4, 6, 8] 
+    ValidateFactory=1
+    for columns in actual_columns:
+        for rows in actual_rows:
+            if currentBoard.board[rows][columns]=="BCH":
+                if columns==4 or columns==22:
+                    score+=3
+                else:
+                    score+=1
+            elif currentBoard.board[rows][columns]=="FAC":
+                if currentBoard.Factory>3:
+                     score+=(8-currentBoard.Factory)
+                else:
+                    if ValidateFactory>4:
+                        score+=1
+                    else:
+                        score+=4
+                        ValidateFactory+=1
+            elif currentBoard.board[rows][columns]=="HSE":
+                print('HSE')    
+            elif currentBoard.board[rows][columns]=="SHP":
+                print('SHP')
+            elif currentBoard.board[rows][columns]=="HWY":
+                print('HWY')
+            elif currentBoard.board[rows][columns]=="PRK":
+                print('PRK')
+            elif currentBoard.board[rows][columns]=="MON":
+                print('MON')
+            
+    print("Score: " + str(score)) 
+    return score
+    
+

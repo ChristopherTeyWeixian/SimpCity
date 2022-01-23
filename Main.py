@@ -14,6 +14,7 @@ while (True):
             while(True):
                 if board.turn >= 17:
                     EndGame(board)
+                    CalculateScore(board)
                     break
                 else:
                     game_opt,building_to_build = game_menu(board)
@@ -25,7 +26,8 @@ while (True):
                             choose = str(input("Build where? "))
                             place_building(board,building_to_build,choose)
                         case "3":
-                            print("see current score, not yet implement")
+                            CalculateScore(board)
+                            print((board.score))
                         case "4":
                             board.Save_Board()
                         case "0":
@@ -45,10 +47,9 @@ while (True):
                         choose = str(input("Build where? "))
                         place_building(board, building_to_build, choose)
                     case "3":
-                        display_remaining_building(board)
+                        CalculateScore(board)
+                        print(board.score)
                     case "4":
-                        print("see current score, not yet implement")
-                    case "5":
                         board.Save_Board()
                     case "0":
                         break

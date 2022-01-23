@@ -6,6 +6,7 @@ class Board(object):
     def __init__(self):
         self.board = []
         self.turn = 1
+        self.score = 0
         
         self.Beach= 8
         self.Factory= 8
