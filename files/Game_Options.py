@@ -323,6 +323,7 @@ def CalculateScore(currentBoard):
                     else:
                         score+=4
                         ValidateFactory+=1
+            #TODO
             elif currentBoard.board[rows][columns]=="HSE":
                 print('HSE')    
             elif currentBoard.board[rows][columns]=="SHP":
