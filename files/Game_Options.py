@@ -308,7 +308,6 @@ def CalculateScore(currentBoard):
     actual_rows = [2, 4, 6, 8] 
 
     prk_activeList = []
-    prk_checkedList = []
     prk_indv_count = []
 
     hse_count = 0
@@ -490,7 +489,8 @@ def CalculateScore(currentBoard):
 
     #for PRK scoring system
     while len(prk_activeList) != 0:
-        temp_count, prk_activeList, prk_checkedList = PRK_Recursive(prk_activeList[0] ,prk_activeList, prk_checkedList)
+        path  = []
+        temp_count, prk_activeList = PRK_Recursive(path, prk_activeList[0] ,prk_activeList)
         prk_indv_count.append(temp_count)
 
     if len(prk_indv_count) != 0:
@@ -582,134 +582,35 @@ def Combine_String(main, sub, count):
 '''
 # Recursive method for PRK
 # The base recursive
-def PRK_Recursive(current, active, checked):
-
+def PRK_Recursive(path, current, active):
+    path.append(current)
     down_count = 0
     up_count = 0
     self_left = 0
     self_right = 0
 
-    #downwards
-    if [current[0]  + 1, current[1]] in active:
-        down_count, active, checked = PRK_RecursiveDown([current[0]  + 1, current[1]], active, checked)
-    #upwards
-    if [current[0] - 1, current[1]] in active:
-        up_count, active, checked = PRK_RecursiveUp([current[0] - 1, current[1]], active, checked)
     #left
-    if [current[0], current[1] - 1] in active:
-        self_left, active, checked = PRK_RecursiveLeft([current[0], current[1] - 1], active, checked)
+    if [current[0], current[1] - 1] in active and [current[0], current[1] - 1] not in path:
+        self_left, active = PRK_Recursive(path, [current[0], current[1] - 1], active)
     #right
-    if [current[0], current[1] + 1] in active:
-        self_right, active, checked = PRK_RecursiveRight([current[0], current[1] + 1], active, checked)
+    if [current[0], current[1] + 1] in active and [current[0], current[1] + 1] not in path:
+        self_right, active = PRK_Recursive(path, [current[0], current[1] + 1], active)
+
+    #downwards
+    if [current[0]  + 1, current[1]] in active and [current[0]  + 1, current[1]] not in path:
+        down_count, active = PRK_Recursive(path, [current[0]  + 1, current[1]], active)
+    #upwards
+    if [current[0] - 1, current[1]] in active and [current[0] - 1, current[1]] not in path:
+        up_count, active = PRK_Recursive(path, [current[0] - 1, current[1]], active)
 
     counter = 1 + down_count + up_count + self_left + self_right
 
-    removal = None
     for item in active:
         if item == current:
-            removal = item
+            active.remove(item)
             break
 
-    checked.append(removal)
-    active.remove(removal)
-
-    return counter, active, checked
-
-def PRK_RecursiveLeft(current, active, checked):
-    self_left = 0
-    #left
-    if [current[0], current[1] - 1] in active:
-        self_left, active, checked = PRK_RecursiveLeft([current[0], current[1] - 1], active, checked)
-
-    counter = 1 + self_left
-
-    removal = None
-    for item in active:
-        if item == current:
-            removal = item
-            break
-
-    checked.append(removal)
-    active.remove(removal)
-
-    return counter, active, checked
-
-def PRK_RecursiveRight(current, active, checked):
-    self_right = 0
-
-    #right
-    if [current[0], current[1] + 1] in active:
-        self_right, active, checked = PRK_RecursiveRight([current[0], current[1] + 1], active, checked)
-
-    counter = 1 + self_right
-
-    removal = None
-    for item in active:
-        if item == current:
-            removal = item
-            break
-
-    checked.append(removal)
-    active.remove(removal)
-
-    return counter, active, checked
-
-def PRK_RecursiveDown(current, active, checked):
-    down_count = 0
-    self_left = 0
-    self_right = 0
-
-    #downwards
-    if [current[0]  + 1, current[1]] in active:
-        down_count, active, checked = PRK_RecursiveDown([current[0]  + 1, current[1]], active, checked)
-    #left
-    if [current[0], current[1] - 1] in active:
-        self_left, active, checked = PRK_RecursiveLeft([current[0], current[1] - 1], active, checked)
-    #right
-    if [current[0], current[1] + 1] in active:
-        self_right, active, checked = PRK_RecursiveRight([current[0], current[1] + 1], active, checked)
-    
-    removal = None
-    for item in active:
-        if item == current:
-            removal = item
-            break
-
-    checked.append(removal)
-    active.remove(removal)
-
-    counter = 1 + down_count + self_left + self_right
-
-    return counter, active, checked
-
-def PRK_RecursiveUp(current, active, checked):
-    up_count = 0
-    self_left = 0
-    self_right = 0
-
-    #upwards
-    if [current[0] - 1, current[1]] in active:
-        up_count, active, checked = PRK_RecursiveUp([current[0] - 1, current[1]], active, checked)
-    #left
-    if [current[0], current[1] - 1] in active:
-        self_left, active, checked = PRK_RecursiveLeft([current[0], current[1] - 1], active, checked)
-    #right
-    if [current[0], current[1] + 1] in active:
-        self_right, active, checked = PRK_RecursiveRight([current[0], current[1] + 1], active, checked)
-
-    counter = 1 + up_count + self_left + self_right
-
-    removal = None
-
-    for item in active:
-        if item == current:
-            removal = item
-            break
-
-    checked.append(removal)
-    active.remove(removal)
-
-    return counter, active, checked
+    return counter, active
 
 '''
     Recursive Method for High Way
