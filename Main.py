@@ -27,7 +27,6 @@ while (True):
                             place_building(board,building_to_build,choose)
                         case "3":
                             CalculateScore(board)
-                            print((board.score))
                         case "4":
                             board.Save_Board()
                         case "0":

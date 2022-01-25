@@ -1,5 +1,3 @@
-from re import I
-import xdrlib
 from files.Board import *
 
 #Game Options 1 & 2, Build a building
@@ -304,38 +302,439 @@ def convert_option(Option):
 
 def CalculateScore(currentBoard):
     score=0
+    # Column A - B - C - D
     actual_columns = [4, 10, 16, 22]
+    # Row 1 - 2 - 3 - 4
     actual_rows = [2, 4, 6, 8] 
-    ValidateFactory=1
-    for columns in actual_columns:
-        for rows in actual_rows:
-            if currentBoard.board[rows][columns]=="BCH":
-                if columns==4 or columns==22:
-                    score+=3
+
+    prk_activeList = []
+    prk_checkedList = []
+    prk_indv_count = []
+
+    hse_count = 0
+    fac_count = 0
+    shp_count = 0
+    hwy_count = 0
+    bch_count = 0
+    prk_count = 0
+    mon_count = 0    
+    mon_corner_count = 0
+
+    hse_score = 0
+    fac_score = 0
+    shp_score = 0
+    hwy_score = 0
+    bch_score = 0
+    prk_score = 0
+    mon_score = 0
+
+    hse_line = "HSE: "
+    fac_line = "FAC: "
+    shp_line = "SHP: "
+    hwy_line = "HWY: "
+    bch_line = "BCH: "
+    prk_line = "PRK: "
+    mon_line = "MON: "
+
+    for y in range(0, len(actual_columns)):
+        for x in range(0, len(actual_rows)):
+            # actual_rows[x]
+            # actual_columns[y]
+
+            if currentBoard.board[actual_rows[x]][actual_columns[y]] == "BCH":
+                if actual_columns[y] == 4 or actual_columns[y] == 22:
+                    bch_score += 3
+                    bch_line = Combine_String(bch_line, "3", bch_count)
+                    bch_count += 1
                 else:
-                    score+=1
-            elif currentBoard.board[rows][columns]=="FAC":
-                if currentBoard.Factory>3:
-                     score+=(8-currentBoard.Factory)
+                    bch_score += 1
+                    bch_line = Combine_String(bch_line, "1", bch_count)
+                    bch_count += 1
+
+            elif currentBoard.board[actual_rows[x]][actual_columns[y]] == "FAC":
+                fac_count += 1
+                #calculations done after
+
+            elif currentBoard.board[actual_rows[x]][actual_columns[y]] == "HSE":
+                check_point = [[actual_rows[x - 1], actual_columns[y]], [actual_rows[x + 1], actual_columns[y]], \
+                    [actual_rows[x], actual_columns[y - 1]], [actual_rows[x], actual_columns[y + 1]]]
+                have_fac = False
+                # checks if there is a factory or not
+                # try is used here incase the list count went out of the list, it will not crash
+                for point in check_point:
+                    try:
+                        if currentBoard.board[point[0]][point[1]] == "FAC":
+                            hse_score += 1
+                            hse_line = Combine_String(hse_line, "1", hse_count)
+                            hse_count += 1
+                            have_fac = True
+                            break
+                    except:
+                        continue
+
+                #used for individual scoring of the house
+                if have_fac == False:
+                    temp_score = 0 
+                    for point in check_point:
+                        try:
+                            if currentBoard.board[point[0]][point[1]] == "HSE":
+                                temp_score += 1
+                            elif currentBoard.board[point[0]][point[1]] == "SHP":
+                                temp_score += 2
+                        except:
+                            continue
+                    
+                    hse_score += temp_score
+                    hse_line = Combine_String(hse_line, str(temp_score), hse_count)
+                    hse_count += 1
+                
+
+            elif currentBoard.board[actual_rows[x]][actual_columns[y]] == "SHP":
+                item_1 = " "
+                item_2 = " "
+                item_3 = " "
+                item_4 = " "
+
+                try:
+                    item_1 = currentBoard.board[actual_rows[x - 1]][actual_columns[y]]
+                except:
+                    item_1 = " "
+                try:
+                    item_2 = currentBoard.board[actual_rows[x + 1]][actual_columns[y]]
+                except:
+                    item_2 = " "
+                try:
+                    item_3 = currentBoard.board[actual_rows[x]][actual_columns[y - 1]]
+                except:
+                    item_3 = " "
+                try:
+                    item_4 = currentBoard.board[actual_rows[x]][actual_columns[y + 1]]
+                except:
+                    item_4 = " "
+
+                temp_score = 0
+                if item_1 != " ":
+                    temp_score += 1
+
+                if item_2 != item_1 and item_2 != " ":
+                    temp_score += 1
+
+                if item_3 != item_1 and item_3 != item_2 and item_3 != " ":
+                    temp_score += 1
+                    
+                if item_4 != item_1 and item_4 != item_2 and item_4 != item_3 and item_4 != " ":
+                    temp_score += 1
+
+                shp_score += temp_score    
+                shp_line = Combine_String(shp_line, str(temp_score), shp_count)
+                shp_count += 1
+
+            elif currentBoard.board[actual_rows[x]][actual_columns[y]] == "HWY":
+                temp_score = HWY_Recursive(currentBoard.board, x, y, actual_rows, actual_columns)
+                hwy_score += temp_score
+                hwy_line = Combine_String(hwy_line, str(temp_score), hwy_count)
+                hwy_count += 1
+
+            elif currentBoard.board[actual_rows[x]][actual_columns[y]] == "PRK":
+                temp_pos = [x, y]
+                prk_activeList.append(temp_pos)
+
+            elif currentBoard.board[actual_rows[x]][actual_columns[y]] == "MON":
+                if (x == 0 and y == 0) or (x == 3 and y == 3) or (x == 0 and y == 3) or (x == 3 and y == 0):
+                    mon_score += 2
+                    mon_line = Combine_String(mon_line, "2", mon_count)
+                    mon_count += 1
+                    mon_corner_count += 1
                 else:
-                    if ValidateFactory>4:
-                        score+=1
-                    else:
-                        score+=4
-                        ValidateFactory+=1
-            #TODO
-            elif currentBoard.board[rows][columns]=="HSE":
-                print('HSE')    
-            elif currentBoard.board[rows][columns]=="SHP":
-                print('SHP')
-            elif currentBoard.board[rows][columns]=="HWY":
-                print('HWY')
-            elif currentBoard.board[rows][columns]=="PRK":
-                print('PRK')
-            elif currentBoard.board[rows][columns]=="MON":
-                print('MON')
-            
-    print("Score: " + str(score)) 
+                    mon_score += 1
+                    mon_line = Combine_String(mon_line, "1", mon_count)
+                    mon_count += 1
+
+    '''
+        END OF CHECKING THE BOARD 
+=========================================
+        START OF PRINTING
+    '''            
+
+    #gets BCH score, if there is no count means 0 score
+    if bch_count == 0:
+        bch_line = Combine_String(bch_line, "0", bch_count)
+    #Counts Factory score and change the lines
+    if fac_count >= 4:
+        for i in range(0, fac_count):
+            if i <= 3:
+                fac_score += 4
+                fac_line = Combine_String(fac_line, "4", i)
+            else:
+                fac_score += 1
+                fac_line = Combine_String(fac_line, "1", i)
+    elif fac_count > 0:
+        for i in range (0, fac_count):
+            fac_score += fac_count
+            fac_line = Combine_String(fac_line, str(fac_count), i)
+    #gets FAC score, if there is no count means 0 score
+    else:
+        fac_line = Combine_String(fac_line, "0", fac_count)
+
+    #gets HSE score, if there is no count means 0 score
+    if hse_count == 0:
+        hse_line = Combine_String(hse_line, "0", hse_count)
+
+    #gets SHP score, if there is no count means 0 score
+    if shp_count == 0:
+        shp_line = Combine_String(shp_line, "0", shp_count)
+
+    #gets HWY score, if there is no count means 0 score
+    if hwy_count == 0:
+        hwy_line = Combine_String(hwy_line, "0", hwy_count)
+
+    #for PRK scoring system
+    while len(prk_activeList) != 0:
+        temp_count, prk_activeList, prk_checkedList = PRK_Recursive(prk_activeList[0] ,prk_activeList, prk_checkedList)
+        prk_indv_count.append(temp_count)
+
+    if len(prk_indv_count) != 0:
+        for counter in prk_indv_count:
+            value = 0
+            if counter == 1:
+                value = 1
+            elif counter == 2:
+                value = 3
+            elif counter == 3:
+                value = 8
+            elif counter == 4:
+                value = 16
+            elif counter == 5:
+                value = 22
+            elif counter == 6:
+                value = 23
+            elif counter == 7:
+                value = 24
+            elif counter == 8:
+                value = 25
+
+            prk_score += value
+            prk_line = Combine_String(prk_line, str(value), prk_count)
+            prk_count += 1
+    #gets PRK score, if there is no count mean 0 score
+    if prk_count == 0:
+        prk_line = Combine_String(prk_line, "0", prk_count)
+
+    if mon_count == 0:
+        mon_line = Combine_String(mon_line, "0", mon_count)
+    elif mon_corner_count >= 3:
+        mon_score = mon_count * 4
+        mon_line = "MON: "
+        for i in range(0, mon_count):
+            mon_line = Combine_String(mon_line, "4", i)
+
+    if currentBoard.BuildingState[0] == "True" and bch_count != 0:
+        print(bch_line + " = " + str(bch_score))
+    elif currentBoard.BuildingState[0] == "True" and bch_count == 0:
+        print(bch_line)
+    
+    if currentBoard.BuildingState[1] == "True" and fac_count != 0:
+        print(fac_line + " = " + str(fac_score))
+    elif currentBoard.BuildingState[1] == "True" and fac_count == 0:
+        print(fac_line)
+
+    if currentBoard.BuildingState[2] == "True" and hse_count != 0:
+        print(hse_line + " = " + str(hse_score))
+    elif currentBoard.BuildingState[2] == "True" and hse_count == 0:
+        print(hse_line)
+
+    if currentBoard.BuildingState[3] == "True" and shp_count != 0:
+        print(shp_line + " = " + str(shp_score))
+    elif currentBoard.BuildingState[3] == "True" and shp_count == 0:
+        print(shp_line)
+
+    if currentBoard.BuildingState[4] == "True" and hwy_count != 0:
+        print(hwy_line + " = " + str(hwy_score))
+    elif currentBoard.BuildingState[4] == "True" and hwy_count == 0:
+        print(hwy_line)
+
+    if currentBoard.BuildingState[5] == "True" and prk_count != 0:
+        print(prk_line + " = " + str(prk_score))
+    elif currentBoard.BuildingState[5] == "True" and prk_count == 0:
+        print(prk_line)
+
+    if currentBoard.BuildingState[6] == "True" and mon_count != 0:
+       print(mon_line + " = " + str(mon_score))
+    elif currentBoard.BuildingState[6] == "True" and mon_count == 0:
+        print(mon_line)
+    
+
+    score = bch_score + fac_score + hse_score + shp_score + hwy_score + prk_score + mon_score
+    print("Total Score: " + str(score) + "\n") 
     return score
     
 
+def Combine_String(main, sub, count):
+    if count == 0:
+        main = main + sub
+    else:
+        main = main + " + " + sub
+
+    return main
+
+'''
+    Recursive Method for PARK
+'''
+# Recursive method for PRK
+# The base recursive
+def PRK_Recursive(current, active, checked):
+
+    down_count = 0
+    up_count = 0
+    self_left = 0
+    self_right = 0
+
+    #downwards
+    if [current[0]  + 1, current[1]] in active:
+        down_count, active, checked = PRK_RecursiveDown([current[0]  + 1, current[1]], active, checked)
+    #upwards
+    if [current[0] - 1, current[1]] in active:
+        up_count, active, checked = PRK_RecursiveUp([current[0] - 1, current[1]], active, checked)
+    #left
+    if [current[0], current[1] - 1] in active:
+        self_left, active, checked = PRK_RecursiveLeft([current[0], current[1] - 1], active, checked)
+    #right
+    if [current[0], current[1] + 1] in active:
+        self_right, active, checked = PRK_RecursiveRight([current[0], current[1] + 1], active, checked)
+
+    counter = 1 + down_count + up_count + self_left + self_right
+
+    removal = None
+    for item in active:
+        if item == current:
+            removal = item
+            break
+
+    checked.append(removal)
+    active.remove(removal)
+
+    return counter, active, checked
+
+def PRK_RecursiveLeft(current, active, checked):
+    self_left = 0
+    #left
+    if [current[0], current[1] - 1] in active:
+        self_left, active, checked = PRK_RecursiveLeft([current[0], current[1] - 1], active, checked)
+
+    counter = 1 + self_left
+
+    removal = None
+    for item in active:
+        if item == current:
+            removal = item
+            break
+
+    checked.append(removal)
+    active.remove(removal)
+
+    return counter, active, checked
+
+def PRK_RecursiveRight(current, active, checked):
+    self_right = 0
+
+    #right
+    if [current[0], current[1] + 1] in active:
+        self_right, active, checked = PRK_RecursiveRight([current[0], current[1] + 1], active, checked)
+
+    counter = 1 + self_right
+
+    removal = None
+    for item in active:
+        if item == current:
+            removal = item
+            break
+
+    checked.append(removal)
+    active.remove(removal)
+
+    return counter, active, checked
+
+def PRK_RecursiveDown(current, active, checked):
+    down_count = 0
+    self_left = 0
+    self_right = 0
+
+    #downwards
+    if [current[0]  + 1, current[1]] in active:
+        down_count, active, checked = PRK_RecursiveDown([current[0]  + 1, current[1]], active, checked)
+    #left
+    if [current[0], current[1] - 1] in active:
+        self_left, active, checked = PRK_RecursiveLeft([current[0], current[1] - 1], active, checked)
+    #right
+    if [current[0], current[1] + 1] in active:
+        self_right, active, checked = PRK_RecursiveRight([current[0], current[1] + 1], active, checked)
+    
+    removal = None
+    for item in active:
+        if item == current:
+            removal = item
+            break
+
+    checked.append(removal)
+    active.remove(removal)
+
+    counter = 1 + down_count + self_left + self_right
+
+    return counter, active, checked
+
+def PRK_RecursiveUp(current, active, checked):
+    up_count = 0
+    self_left = 0
+    self_right = 0
+
+    #upwards
+    if [current[0] - 1, current[1]] in active:
+        up_count, active, checked = PRK_RecursiveUp([current[0] - 1, current[1]], active, checked)
+    #left
+    if [current[0], current[1] - 1] in active:
+        self_left, active, checked = PRK_RecursiveLeft([current[0], current[1] - 1], active, checked)
+    #right
+    if [current[0], current[1] + 1] in active:
+        self_right, active, checked = PRK_RecursiveRight([current[0], current[1] + 1], active, checked)
+
+    counter = 1 + up_count + self_left + self_right
+
+    removal = None
+
+    for item in active:
+        if item == current:
+            removal = item
+            break
+
+    checked.append(removal)
+    active.remove(removal)
+
+    return counter, active, checked
+
+'''
+    Recursive Method for High Way
+'''
+# Recursive method for Highway
+def HWY_Recursive(board, x, y, row, col):
+    return 1 + HWY_RecursiveLeft(board, x, y - 1, row, col) + HWY_RecursiveRight(board, x, y + 1, row, col)
+
+def HWY_RecursiveLeft(board, x, y, row, col):
+    try:
+        if y == -1:
+            return 0
+
+        if board[row[x]][col[y]] == "HWY":
+            return 1 + HWY_RecursiveLeft(board, x, y - 1, row, col)
+        else:
+            return 0
+    except:
+        return 0
+
+def HWY_RecursiveRight(board, x , y, row, col):
+    try:
+        if board[row[x]][col[y]] == "HWY":
+            return 1 + HWY_RecursiveRight(board, x, y + 1, row , col)
+        else:
+            return 0
+    except:
+        return 0
