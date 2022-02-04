@@ -143,4 +143,11 @@ def Option_Building(currentBoard):
     print("Maximum only 5 types of building can be chosen (True)")
     option = input("Select Building Pool: ")
 
-    return option
+    try:
+        option = int(option)
+        if option >= 0 and option < 8:
+            return option
+        else:
+            return "Out of Range"
+    except:
+        return "Wrong Input"

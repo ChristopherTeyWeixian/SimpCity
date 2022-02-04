@@ -185,7 +185,13 @@ class Board(object):
             return self.Monument
 
     def Change_BuildingState(self, i):
-        j = int(i) - 1
+        if i >= len(self.BuildingState) or i < 0:
+            return "Out of Range"
+        elif i == 0:
+            return "Exitting"
+
+        j = i - 1
+
         amount_Active = 0
         amount_Inactive = 0
 
@@ -202,6 +208,8 @@ class Board(object):
                 self.BuildingState[j] = "False"
             else:
                 self.BuildingState[j] = "True"
+        
+        return self.BuildingState[j]
 
     def Get_BuildingState(self):
         adds_line = "/q"
@@ -218,7 +226,7 @@ class Board(object):
 
         txt_data.close()
         
-        return None
+        return self.BuildingState
 
     def Set_BuildingState(self):
         adds_line = "/q"
@@ -237,4 +245,4 @@ class Board(object):
         txt_data.write(sv_data)
         txt_data.close()
 
-        return None
+        return self.BuildingState
