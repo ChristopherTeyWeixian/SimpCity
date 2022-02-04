@@ -103,16 +103,11 @@ def prevent_overlap(currentBoard, option, building):
 
     column_coord,row_coord=convert_option(option)
     
-    #if column_coord is not None or row_coord is not None:
     if currentBoard.board[actual_rows[row_coord]][actual_columns[column_coord]] != " ":
         print("Cannot overlap buildings")
         return "Overlap"
     else:
         check_adjacent(currentBoard, option, building)
-
-    #else:
-    #    print(" ")
-    #    return False
 
 def check_building_left(currentBoard):
     BuildingListShortForm=["BCH","FAC","HSE","SHP","HWY", "PRK", "MON"]
