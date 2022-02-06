@@ -424,6 +424,7 @@ def CalculateScore(currentBoard):
 
     score = bch_score + fac_score + hse_score + shp_score + hwy_score + prk_score + mon_score
     print("Total Score: " + str(score) + "\n") 
+
     return score
     
 
@@ -497,3 +498,112 @@ def HWY_RecursiveRight(board, x , y, row, col):
             return 0
     except:
         return 0
+
+def View_highscore():
+        try:
+            # adds_line is needed as "\b" is counted as a functionality in python
+            # thus a roundabout way was used instead of just changing the file name
+            adds_line = "/q"
+            adds_line = adds_line.replace("q", "")
+
+            # python files is different location as data files
+            path = str(pathlib.Path(__file__).parent.resolve()) + "/.." + adds_line + "data/high_score.xlsx"
+
+            # loads the excel file of path
+            wb_obj = openpyxl.load_workbook(path)
+            sheet_obj = wb_obj.active
+            Score_list = []
+            Name_list=[]
+            # nested for loop to get each cell one by one and append into the board
+            for x in range(1, sheet_obj.max_row + 1):
+                for y in range(1, sheet_obj.max_column + 1):
+                    cell_obj = sheet_obj.cell(row = x, column = y).value
+                    if cell_obj!=None:
+                        if y%2==0:
+                            Score_list.append(cell_obj)
+                            
+                        else:
+                            Name_list.append(cell_obj)
+            print("--------- HIGH SCORES ---------")
+            print("Pos  Player\t          Score")
+            print("---  ------\t          -----")
+            for x in range(len(Score_list)):
+                print(x+1,". ",Name_list[x],"\t\t    ",Score_list[x])
+            print("-------------------------------")
+            return True
+        except:
+            print("[!] Could not connect to Excel Database, Please Try Again.\n")
+            return False
+
+def Verify_Modify_highscore(currentBoard):
+    score = CalculateScore(currentBoard)
+    try:
+        # adds_line is needed as "\b" is counted as a functionality in python
+        # thus a roundabout way was used instead of just changing the file name
+        adds_line = "/q"
+        adds_line = adds_line.replace("q", "")
+
+        # python files is different location as data files
+        path = str(pathlib.Path(__file__).parent.resolve()) + "/.." + adds_line + "data/high_score.xlsx"
+
+        # loads the excel file of path
+        wb_obj = openpyxl.load_workbook(path)
+        index=0
+        sheet_obj = wb_obj.active
+        Score_list = []
+        Name_list=[]
+        # nested for loop to get each cell one by one and append into the board
+        for x in range(1, sheet_obj.max_row + 1):
+            for y in range(1, sheet_obj.max_column + 1):
+                cell_obj = sheet_obj.cell(row = x, column = y).value
+                if cell_obj!=None:
+                    if y%2==0:
+                        Score_list.append(cell_obj)
+
+                    else:
+                        Name_list.append(cell_obj)
+
+        #Verify if user has a new highscore
+        finalIndex=len(Name_list)-1
+        for x in range(0,10):
+            #Check first place
+            if finalIndex-x==0 and score>Score_list[0]:
+                print("Congratulations! You made the high score board at position",(finalIndex-x)+1 ,"!")
+                username = input("Enter Your Name: ")
+                #If username char >20 or empty, prompt again
+                while len(username)>20 or len(username)==0:
+                    username = input("Enter Your Name: ")
+
+                Score_list.insert(((finalIndex-x)),score)
+                Name_list.insert(((finalIndex-x)),username)
+                break
+
+            #If score doesnt beat the lowest score
+            #Go straight to View_highscore
+            elif score<Score_list[finalIndex] or score==Score_list[finalIndex]:
+                View_highscore()
+                return "No highscore"
+
+            #Check for positions 2 onwards
+            elif score <= Score_list[finalIndex-x] and score >Score_list[finalIndex]:
+                print("Congratulations! You made the high score board at position",(finalIndex-x)+2 ,"!")
+                username = input("Enter Your Name: ")
+                #If username char >20 or empty, prompt again
+                while len(username)>20 or len(username)==0:
+                    username = input("Enter Your Name: ")
+
+                Score_list.insert(((finalIndex-x)+1),score)
+                Name_list.insert(((finalIndex-x)+1),username)
+                break
+
+        #Only save first 10 rows
+        for i in range(0, 10):
+            sheet_obj.cell(row=i+1,column=1,value=Name_list[i])
+            sheet_obj.cell(row=i+1,column=2,value=Score_list[i])
+        wb_obj.save(path)
+        View_highscore()
+        return "Modified highscore"
+
+    except:
+        print("[!] Could not connect to Excel Database, Please Try Again.\n")
+        return False

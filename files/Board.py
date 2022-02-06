@@ -185,7 +185,7 @@ class Board(object):
             return self.Monument
 
     def Change_BuildingState(self, i):
-        if i >= len(self.BuildingState) or i < 0:
+        if i > len(self.BuildingState) or i < 0:
             return "Out of Range"
         elif i == 0:
             return "Exitting"

@@ -14,7 +14,7 @@ while (True):
             while(True):
                 if board.turn >= 17:
                     EndGame(board)
-                    CalculateScore(board)
+                    Verify_Modify_highscore(board)
                     break
                 else:
                     game_opt,building_to_build = game_menu(board)
@@ -39,7 +39,7 @@ while (True):
             while(True):
                 if board.turn >= 17:
                     EndGame(board)
-                    CalculateScore(board)
+                    Verify_Modify_highscore(board)
                     break
                 else:
                     game_opt,building_to_build = game_menu(board)
@@ -57,16 +57,23 @@ while (True):
                             board.Save_Board()
                         case "0":
                             break
+
         case "3":
+            View_highscore()
+
+        case "4":
             board = Board()
             board.Get_BuildingState()
             while True:
                 value = Option_Building(board)
-                if value == "0":
-                    board.Set_BuildingState()
-                    break
-                else:
-                    board.Change_BuildingState(value)           
+                try:
+                    if value == 0:
+                        board.Set_BuildingState()
+                        break
+                    else:
+                        board.Change_BuildingState(value)           
+                except:
+                    print("Invalid Input")
 
         case "0":#Exit
             quit()

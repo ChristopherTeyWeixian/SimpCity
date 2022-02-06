@@ -7,7 +7,7 @@ from files.Game_Options import check_building_left
 def main_menu():
 
     menu = ["Welcome, Mayor of Simp City!", "----------------------------", 
-        "1. Start new game", "2. Load saved game", "3. Options", "", "0. Exit", "Your choice? "]
+        "1. Start new game", "2. Load saved game", "3. Show high scores", "4. Options", "", "0. Exit", "Your choice? "]
     
     for item in menu:
         if item == "Your choice? ":
