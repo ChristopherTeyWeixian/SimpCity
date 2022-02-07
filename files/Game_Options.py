@@ -326,7 +326,6 @@ def CalculateScore(currentBoard):
 =========================================
         START OF PRINTING
     '''            
-
     #gets BCH score, if there is no count means 0 score
     if bch_count == 0:
         bch_line = Combine_String(bch_line, "0", bch_count)
