@@ -1,3 +1,4 @@
+from sqlite3 import Row
 from files.Board import *
 
 #Game Options 1 & 2, Build a building
@@ -158,6 +159,12 @@ def convert_option(Option):
     # Return col & row index
     return column,row
 
+def HelperFunction(act_row, act_col, x, y):
+    if x > 3 or x < 0 or y > 3 or y < 0:
+        return None
+    else:
+        return [act_row[x], act_col[y]]
+
 def CalculateScore(currentBoard):
     score=0
     # Column A - B - C - D
@@ -213,14 +220,21 @@ def CalculateScore(currentBoard):
                 #calculations done after
 
             elif currentBoard.board[actual_rows[x]][actual_columns[y]] == "HSE":
-                check_point = [[actual_rows[x - 1], actual_columns[y]], [actual_rows[x + 1], actual_columns[y]], \
-                    [actual_rows[x], actual_columns[y - 1]], [actual_rows[x], actual_columns[y + 1]]]
+                point_One = HelperFunction(actual_rows, actual_columns, x - 1, y)
+                point_Two = HelperFunction(actual_rows, actual_columns, x + 1, y)
+                point_Three = HelperFunction(actual_rows, actual_columns, x, y - 1)
+                point_Four = HelperFunction(actual_rows, actual_columns, x, y + 1)
+
+                check_point = [point_One, point_Two, point_Three, point_Four]
+
                 have_fac = False
                 # checks if there is a factory or not
                 # try is used here incase the list count went out of the list, it will not crash
                 for point in check_point:
                     try:
-                        if currentBoard.board[point[0]][point[1]] == "FAC":
+                        if point == None:
+                            continue
+                        elif currentBoard.board[point[0]][point[1]] == "FAC":
                             hse_score += 1
                             hse_line = Combine_String(hse_line, "1", hse_count)
                             hse_count += 1
